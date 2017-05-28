@@ -102,6 +102,8 @@ namespace AIRogue.Engine
         /// <returns>Bool</returns>
         public static bool Update()
         {
+            InputHandler.HandleInput();
+
             if (nextTime < Clock.GetTime())
             {
                 foreach (List<IGameObject> gameObjectList in gameObjectGroupList)

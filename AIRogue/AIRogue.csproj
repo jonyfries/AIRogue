@@ -45,6 +45,8 @@
     <Compile Include="Agent\Body\Actor.cs" />
     <Compile Include="Agent\Agent.cs" />
     <Compile Include="AIRogue.cs" />
+    <Compile Include="Engine\ControlledCamera.cs" />
+    <Compile Include="Engine\InputHandler.cs" />
     <Compile Include="Mapping\BuildDungeon.cs" />
     <Compile Include="Engine\Camera2D.cs" />
     <Compile Include="Engine\Clock.cs" />

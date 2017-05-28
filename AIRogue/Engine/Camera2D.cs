@@ -40,15 +40,29 @@ namespace AIRogue.Engine
             CameraSpeed = 128;
         }
 
+        /// <summary>
+        /// Update Camera position
+        /// </summary>
         public void Update()
         {
             if (!(goalPosition == Position))
             {
                 float travelPercentage = (CameraSpeed * Clock.GetTick()) / (Position - goalPosition).Length();
-                Position = Vector2.Lerp(Position, goalPosition, travelPercentage);
+                if (travelPercentage >= 1)
+                {
+                    Position = goalPosition;
+                }
+                else
+                {
+                    Position = Vector2.Lerp(Position, goalPosition, travelPercentage);
+                }
             }
         }
 
+        /// <summary>
+        /// Tell the camera to move towards a position
+        /// </summary>
+        /// <param name="gotoPosition">Position the camera should move to.</param>
         public void LerpToPosition(Vector2 gotoPosition)
         {
             goalPosition = gotoPosition;
