@@ -170,7 +170,8 @@ namespace AIRogue.Agent
                 filter = IsVisible(key) ? Color.White : Color.Gray;
                 location.Drawable.Draw(key, filter);
                 location.Item.Drawable.Draw(key, filter);
-                Engine.Drawable.spriteBatch.DrawString(font, location.Score.Score.ToString(), key * 65, Color.Black);
+                Vector2 drawPosition = new Vector2(key.X * 64 + 4, key.Y * 64 + 4);
+                Engine.Drawable.spriteBatch.DrawString(font, location.Score.Score.ToString(), drawPosition, Color.Black);
             }
             body.Drawable.Draw(MemoryPosition);
         }

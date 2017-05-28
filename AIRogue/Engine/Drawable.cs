@@ -53,7 +53,7 @@ namespace AIRogue.Engine
         public void Draw(Vector2 position, Color _filterColor)
         {
             if ( textureName != null)
-                spriteBatch.Draw(Image, position * 65, _filterColor);
+                spriteBatch.Draw(Image, position * 64, _filterColor);
         }
     }
 }
