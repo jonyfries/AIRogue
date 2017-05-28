@@ -2,20 +2,26 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using System.Collections.Generic;
+
 namespace AIRogue
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class AIRogue : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public Game1()
+        public AIRogue()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            graphics.PreferredBackBufferWidth = 1024;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 768;   // set this value to the desired height of your window
+            graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -41,6 +47,10 @@ namespace AIRogue
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            Engine.Drawable.spriteBatch = spriteBatch;
+            Engine.ObjectHandler.content = Content;
+
+            GameSetup.Setup();
         }
 
         /// <summary>
@@ -59,10 +69,15 @@ namespace AIRogue
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            Engine.Clock.gameTime = gameTime;
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             // TODO: Add your update logic here
+            if (!Engine.ObjectHandler.Update()) {
+                this.Exit();
+            }
 
             base.Update(gameTime);
         }
@@ -76,6 +91,9 @@ namespace AIRogue
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin(transformMatrix: Engine.ObjectHandler.gameCamera.TransformMatrix);
+            Engine.ObjectHandler.Draw();
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
