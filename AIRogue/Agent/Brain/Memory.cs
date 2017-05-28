@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using AIRogue.Agent.Brain.Constructs;
 
-namespace AIRogue.Agent
+namespace AIRogue.Agent.Brain
 {
     public class Memory
     {

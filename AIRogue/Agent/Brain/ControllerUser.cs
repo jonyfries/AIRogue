@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace AIRogue.Agent
+namespace AIRogue.Agent.Brain
 {
     public class ControllerUser : Controller
     {

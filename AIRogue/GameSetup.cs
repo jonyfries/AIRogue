@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 
 using AIRogue.Agent;
+using AIRogue.Agent.Brain;
 using AIRogue.Engine;
 using AIRogue.GameObjects;
 

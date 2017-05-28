@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
 using AIRogue.GameObjects;
+using AIRogue.Agent.Brain;
 using AIRogue.Agent.Brain.Constructs;
 
 namespace AIRogue.Agent
