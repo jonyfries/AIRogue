@@ -10,7 +10,7 @@ using AIRogue.Engine;
 using AIRogue.GameObjects;
 using AIRogue.Agent.Brain.Constructs;
 
-namespace AIRogue.Agent
+namespace AIRogue.Agent.Brain
 {
     class ControllerReflexWithState : Controller
     {

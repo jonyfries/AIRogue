@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 
-namespace AIRogue.Agent
+namespace AIRogue.Agent.Brain
 {
     public abstract class Controller
     {
