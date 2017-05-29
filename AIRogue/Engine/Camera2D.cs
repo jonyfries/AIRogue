@@ -16,7 +16,7 @@ namespace AIRogue.Engine
         public float Rotation { get; set; }
         public float CameraSpeed { get; set; } //Pixels per Second
 
-        private Vector2 goalPosition;
+        protected Vector2 goalPosition;
         private Rectangle Bounds { get; set; }
 
         public Matrix TransformMatrix

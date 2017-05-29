@@ -9,5 +9,6 @@ namespace AIRogue.GameObjects
         string TextureName { get; }
         void Update();
         Vector2 Position { get; }
+        Drawable Drawable { get; }
     }
 }

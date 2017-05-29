@@ -19,6 +19,7 @@ namespace AIRogue.GameObjects
         public bool IsWalkable { get; private set; }
         public Vector2 Position { get; private set; }
         public string TextureName { get; }
+        public Drawable Drawable { get; set; }
         IItem item;
         
         /// <summary>
@@ -33,6 +34,7 @@ namespace AIRogue.GameObjects
             this.Position = _position;
             this.IsWalkable = _passable;
             ObjectHandler.AddGameObject(this, ObjectHandler.GameObjectLayer.BACKGROUND);
+            Drawable = new Drawable(TextureName);
 
             if (_hasTreasure && _passable)
             {
@@ -49,6 +51,7 @@ namespace AIRogue.GameObjects
             this.Position = new Vector2 (_position.X, _position.Y);
             this.IsWalkable = _passable;
             ObjectHandler.AddGameObject(this, ObjectHandler.GameObjectLayer.BACKGROUND);
+            Drawable = new Drawable(TextureName);
 
             if (_hasTreasure && _passable)
             {

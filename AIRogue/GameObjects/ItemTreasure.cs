@@ -16,10 +16,12 @@ namespace AIRogue.GameObjects
         public Vector2 Position { get; private set; }
         public ItemType itemType { get { return ItemType.TREASURE; } }
         public string TextureName { get; private set; }
+        public Drawable Drawable { get; }
 
         public ItemTreasure(Vector2 _position) {
             this.Position = _position;
             TextureName = "treasure";
+            Drawable = new Drawable(TextureName);
             ObjectHandler.AddGameObject(this, ObjectHandler.GameObjectLayer.ITEM);
         }
         
