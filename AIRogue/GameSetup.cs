@@ -39,20 +39,20 @@ namespace AIRogue
             Agent.Agent agent;
             bool isCameraTarget;
 
-            agent = new Agent.Agent();
-            isCameraTarget = true;
-            ControllerUser userBrain = new ControllerUser(agent, targetState);
-            SetupAgent(agent, userBrain, world, isCameraTarget);
+            //agent = new Agent.Agent();
+            //isCameraTarget = true;
+            //ControllerUser userBrain = new ControllerUser(agent, targetState);
+            //SetupAgent(agent, userBrain, world, isCameraTarget);
 
             //agent = new Agent.Agent();
             //isCameraTarget = false;
             //ControllerReflex reflexBrain = new ControllerReflex(agent, targetState);
             //SetupAgent(agent, reflexBrain, world, isCameraTarget);
 
-            //agent = new Agent.Agent();
-            //isCameraTarget = true;
-            //ControllerReflexWithState stateReflexBrain = new ControllerReflexWithState(agent, targetState);
-            //SetupAgent(agent, stateReflexBrain, world, isCameraTarget);
+            agent = new Agent.Agent();
+            isCameraTarget = true;
+            ControllerReflexWithState stateReflexBrain = new ControllerReflexWithState(agent, targetState);
+            SetupAgent(agent, stateReflexBrain, world, isCameraTarget);
         }
 
         static private void SetupAgent(Agent.Agent agent, Controller brain, World world, bool isCameraTarget)
