@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 
 using AIRogue.GameObjects;
 
@@ -32,6 +33,17 @@ namespace AIRogue.Engine
             gameObjectGroupList = new List<List<IGameObject>>();
             foreach (GameObjectLayer listNumber in Enum.GetValues(typeof(GameObjectLayer))){
                 gameObjectGroupList.Add(new List<IGameObject>());
+            }
+            InputHandler.KeyDownListeners.Add(OnKeyDown);
+        }
+
+        public static void OnKeyDown(Keys key)
+        {
+            int result;
+            string testString = key.ToString().Substring(1);
+            if (int.TryParse(testString, out result))
+            {
+                actionDelay = result * .1f;
             }
         }
 
