@@ -37,25 +37,24 @@ namespace AIRogue
 
             //Create the Agents
             Agent.Agent agent;
-            bool isCameraTarget;
 
             //agent = new Agent.Agent();
-            //isCameraTarget = true;
+            //agent.IsCameraTarget = true;
             //ControllerUser userBrain = new ControllerUser(agent, targetState);
-            //SetupAgent(agent, userBrain, world, isCameraTarget);
-
-            //agent = new Agent.Agent();
-            //isCameraTarget = false;
-            //ControllerReflex reflexBrain = new ControllerReflex(agent, targetState);
-            //SetupAgent(agent, reflexBrain, world, isCameraTarget);
+            //SetupAgent(agent, userBrain, world);
 
             agent = new Agent.Agent();
-            isCameraTarget = true;
+            agent.IsCameraTarget = false;
+            ControllerReflex reflexBrain = new ControllerReflex(agent, targetState);
+            SetupAgent(agent, reflexBrain, world);
+
+            agent = new Agent.Agent();
+            agent.IsCameraTarget = true;
             ControllerReflexWithState stateReflexBrain = new ControllerReflexWithState(agent, targetState);
-            SetupAgent(agent, stateReflexBrain, world, isCameraTarget);
+            SetupAgent(agent, stateReflexBrain, world);
         }
 
-        static private void SetupAgent(Agent.Agent agent, Controller brain, World world, bool isCameraTarget)
+        static private void SetupAgent(Agent.Agent agent, Controller brain, World world)
         {
             string image = "agent";
             Vector2 position;
@@ -67,9 +66,14 @@ namespace AIRogue
 
             Vision eyes = new Vision(agent);
             Actor body = new Actor(agent, image, position, world);
-            agent.IsCameraTarget = isCameraTarget;
             agent.Setup(brain, eyes, body, world);
             ObjectHandler.AddAgent(agent);
+
+            if (agent.IsCameraTarget)
+            {
+                ObjectHandler.gameCamera.Target = body;
+                ObjectHandler.cameraTarget = agent;
+            }
         }
     }
 }

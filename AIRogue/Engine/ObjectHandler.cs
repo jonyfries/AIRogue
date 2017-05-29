@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
@@ -25,9 +26,11 @@ namespace AIRogue.Engine
         static Dictionary<string, Texture2D> resourceDictionary = new Dictionary<string, Texture2D>();
         static public Goal.GoalState TargetState { get; set; }
         static public ContentManager content;
-        static public Camera2D gameCamera;
+        static public ControlledCamera gameCamera;
         static public float actionDelay;
         static private float nextTime;
+        static public bool displayMap = false;
+        static public Agent.Agent cameraTarget;
 
         static ObjectHandler() {
             gameObjectGroupList = new List<List<IGameObject>>();
@@ -37,6 +40,10 @@ namespace AIRogue.Engine
             InputHandler.KeyDownListeners.Add(OnKeyDown);
         }
 
+        /// <summary>
+        /// Handles OnKeyDown events.
+        /// </summary>
+        /// <param name="key">The key that had the event.</param>
         public static void OnKeyDown(Keys key)
         {
             int result;
@@ -44,6 +51,11 @@ namespace AIRogue.Engine
             if (int.TryParse(testString, out result))
             {
                 actionDelay = result * .1f;
+            }
+            else if (key == Keys.OemTilde)
+            {
+                displayMap = !displayMap;
+                gameCamera.ToggleWorldCam(cameraTarget);
             }
         }
 
@@ -99,11 +111,24 @@ namespace AIRogue.Engine
         /// </summary>
         public static void Draw()
         {
-            foreach (Agent.Agent agent in agentList)
+            if (displayMap)
             {
-                if (agent.IsCameraTarget)
+                foreach (List<IGameObject> objectList in gameObjectGroupList)
                 {
-                    agent.DisplayWorld();
+                    foreach (IGameObject gameObject in objectList)
+                    {
+                        gameObject.Drawable.Draw(gameObject.Position);
+                    }
+                }
+            }
+            else
+            {
+                foreach (Agent.Agent agent in agentList)
+                {
+                    if (agent.IsCameraTarget)
+                    {
+                        agent.DisplayWorld();
+                    }
                 }
             }
         }

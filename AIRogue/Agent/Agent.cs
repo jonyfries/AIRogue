@@ -116,7 +116,10 @@ namespace AIRogue.Agent
         public void OnAgentAction()
         {
             this.memory.AddSet(eyes.CheckSurroundings());
-            Engine.ObjectHandler.gameCamera.LerpToPosition(MemoryPosition * 64);
+            if (IsCameraTarget)
+            {
+                Engine.ObjectHandler.gameCamera.LerpToPosition(MemoryPosition * 64);
+            }
         }
 
         // *** FOR THE EYES *** //
