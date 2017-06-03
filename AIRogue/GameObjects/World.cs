@@ -16,9 +16,9 @@ namespace AIRogue.GameObjects
     public class World
     {
         private Dictionary<Point, Location> map = new Dictionary<Point, Location>();
-        public int width = 20;
-        public int height = 20;
-        public int roomCount = 10;
+        public int width = 50;
+        public int height = 50;
+        public int roomCount = 15;
 
         /// <summary>
         /// Create the environment in which the Agent will be acting.

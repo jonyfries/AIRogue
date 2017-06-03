@@ -11,13 +11,13 @@ using AIRogue.Agent.Brain.Constructs;
 namespace AIRogue.Agent
 {
     public class Vision
-    {
+    {  
         public float VisionRange { get; private set; }
         private Agent parent { get; }
         
         public Vision(Agent parent) {
             this.parent = parent;
-            VisionRange = 1f;
+            VisionRange = 2f;
         }
 
         /// <summary>
