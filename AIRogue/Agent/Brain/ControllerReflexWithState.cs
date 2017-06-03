@@ -45,7 +45,51 @@ namespace AIRogue.Agent.Brain
         }
 
         /// <summary>
-        /// Determine how to weight different directions based on stars visible on the map.
+        /// Determine how to weight different locations based on treasure visible on the map.
+        /// </summary>
+        private void WeightLocations()
+        {
+            float treasureAttinuationFactor = 2;
+
+            foreach (Vector2 position in parent.GetRememberedLocations())
+            {
+                ConstructLocation location = parent.RecallMemoryLocation(position);
+                if (!(location.Item.itemType == ItemType.TREASURE))
+                {
+                    continue;
+                }
+
+                float treasureLure = 16384;
+                location.Score.ExtrinsicScore += treasureLure;
+                treasureLure /= treasureAttinuationFactor;
+
+                Dictionary<Vector2, ConstructLocation> edge = GetAdjacentLocations(position);
+
+                while (treasureLure >= 1 && edge.Count > 0)
+                {
+                    Dictionary<Vector2, ConstructLocation> newEdge = new Dictionary<Vector2, ConstructLocation>();
+
+                    foreach (Vector2 edgePosition in edge.Keys)
+                    {
+                        edge[edgePosition].Score.ExtrinsicScore += treasureLure;
+                        GetAdjacentLocations(edgePosition).ToList().ForEach(x => newEdge[x.Key] = x.Value);
+                    }
+
+                    treasureLure /= treasureAttinuationFactor;
+
+                    //Ensure that positions that have already been handled aren't handled again.
+                    foreach (Vector2 edgePosition in edge.Keys)
+                    {
+                        newEdge.Remove(edgePosition);
+                    }
+
+                    edge = newEdge;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Determine how to weight different directions based on treasure visible on the map.
         /// </summary>
         /// <returns>Dictionary of weights</returns>
         private Dictionary<Vector2, float> WeightDirections()
@@ -90,6 +134,26 @@ namespace AIRogue.Agent.Brain
         }
 
         /// <summary>
+        /// Get all of the ConstructLocations adjacent to a point that are walkable
+        /// </summary>
+        /// <param name="position">Position to get adjacent ConstructLocations to</param>
+        /// <returns>Dictionary of walkable locations</returns>
+        public Dictionary<Vector2, ConstructLocation> GetAdjacentLocations(Vector2 position)
+        {
+            Dictionary<Vector2, ConstructLocation> adjacentDict = new Dictionary<Vector2, ConstructLocation>();
+            foreach (Vector2 direction in directionList)
+            {
+                ConstructLocation testLocation = parent.RecallMemoryLocation(position + direction);
+                if (testLocation != null && testLocation.IsWalkable)
+                {
+                    adjacentDict[position + direction] = testLocation;
+                }
+            }
+
+            return adjacentDict;
+        }
+
+        /// <summary>
         /// Update the location score of each ConstructLocation in Agent Memory.
         /// </summary>
         protected void UpdateLocationScore()
@@ -109,12 +173,23 @@ namespace AIRogue.Agent.Brain
         /// <returns>Returns Action.Option</returns>
         protected Action.Option DetermineMovement()
         {
-            Dictionary<Vector2, float> directionWeight = WeightDirections();
+            //Dictionary<Vector2, float> directionWeight = WeightDirections();
+            //List<Vector2> directionOptions = new List<Vector2>();
+            //foreach (Vector2 direction in directionList)
+            //{
+            //    ConstructLocation checkLocation = parent.RecallRelativeLocation(direction);
+            //    checkLocation.Score.ExtrinsicScore = directionWeight[direction];
+            //    if (checkLocation.IsWalkable)
+            //    {
+            //        directionOptions.Add(direction);
+            //    }
+            //}
+
+            WeightLocations();
             List<Vector2> directionOptions = new List<Vector2>();
             foreach (Vector2 direction in directionList)
             {
                 ConstructLocation checkLocation = parent.RecallRelativeLocation(direction);
-                checkLocation.Score.ExtrinsicScore = directionWeight[direction];
                 if (checkLocation.IsWalkable)
                 {
                     directionOptions.Add(direction);

@@ -74,10 +74,14 @@ namespace AIRogue.Agent
         /// Returns a ConstructLocation based on it's address in the Agent's Memory.
         /// </summary>
         /// <param name="memoryPosition">The address of the ConstructLocation.</param>
-        /// <returns>ConstructLocation</returns>
+        /// <returns>ConstructLocation or null</returns>
         public ConstructLocation RecallMemoryLocation(Vector2 memoryPosition)
         {
-            return this.memory.locationDict[memoryPosition];
+            if (this.memory.locationDict.ContainsKey(memoryPosition))
+            {
+                return this.memory.locationDict[memoryPosition];
+            }
+            return null;
         }
 
         /// <summary>
