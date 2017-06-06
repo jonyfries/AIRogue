@@ -45,7 +45,7 @@ namespace AIRogue.Agent.Brain
         }
 
         /// <summary>
-        /// Determine how to weight different locations based on treasure visible on the map.
+        /// Determine how to weight different locations based on the visible map.
         /// </summary>
         private void WeightLocations()
         {
