@@ -48,6 +48,8 @@ namespace AIRogue.Agent
             this.world = _world;
             this.memory = new Memory(this);
             this.memory.AddSet(eyes.CheckSurroundings());
+
+            this.world.AddActor(this.body);
         }
 
         // *** FOR THE BRAIN *** //
@@ -180,7 +182,26 @@ namespace AIRogue.Agent
                 Vector2 drawPosition = new Vector2(key.X * 64 + 4, key.Y * 64 + 4);
                 Engine.Drawable.spriteBatch.DrawString(font, location.Score.Score.ToString(), drawPosition, Color.Black);
             }
+
+            foreach (Actor actor in this.world.GetActorDict().Values)
+            {
+                if (IsVisible(WorldPositionToMemoryPosition(actor.Position)))
+                {
+                    actor.Drawable.Draw(WorldPositionToMemoryPosition(actor.Position));
+                }
+            }
+
             body.Drawable.Draw(MemoryPosition);
+        }
+
+        /// <summary>
+        /// Convert a world position to a position relative to memoryPosition
+        /// </summary>
+        /// <param name="worldPosition">Position to convert</param>
+        /// <returns>Memory Position</returns>
+        private Vector2 WorldPositionToMemoryPosition(Vector2 worldPosition)
+        {
+            return worldPosition - (this.body.Position - this.MemoryPosition);
         }
     }
 }

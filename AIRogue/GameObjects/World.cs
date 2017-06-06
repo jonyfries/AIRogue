@@ -19,6 +19,7 @@ namespace AIRogue.GameObjects
         public int width = 50;
         public int height = 50;
         public int roomCount = 15;
+        public Dictionary<Vector2, Agent.Actor> actorDict = new Dictionary<Vector2, Agent.Actor>();
 
         /// <summary>
         /// Create the environment in which the Agent will be acting.
@@ -41,6 +42,24 @@ namespace AIRogue.GameObjects
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Add an actor to the world.
+        /// </summary>
+        /// <param name="newActor">Actor to be added</param>
+        public void AddActor(Agent.Actor newActor)
+        {
+            actorDict[newActor.Position] = newActor;
+        }
+
+        /// <summary>
+        /// Get all the actors in the world.
+        /// </summary>
+        /// <returns>Dictionary of actors</returns>
+        public Dictionary<Vector2, Agent.Actor> GetActorDict()
+        {
+            return actorDict;
         }
 
         /// <summary>
